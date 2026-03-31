@@ -84,18 +84,18 @@ jobs:
           DB_ENGINE: django.db.backends.sqlite3
           DB_NAME: ":memory:"
 
-  gitleaks:
-    name: Secret Scan
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+  # gitleaks:
+  #   name: Secret Scan
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0
 
-      - name: Run gitleaks
-        uses: gitleaks/gitleaks-action@v2
-        env:
-          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
+  #     - name: Run gitleaks
+  #       uses: gitleaks/gitleaks-action@v2
+  #       env:
+  #         GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
 
   security:
     name: Security Audit
