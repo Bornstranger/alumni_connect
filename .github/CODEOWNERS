@@ -1,0 +1,12 @@
+# Default owners for the entire repository
+* @maintainers
+
+# CI and infrastructure
+.github/ @maintainers
+Dockerfile @maintainers
+docker-compose.yml @maintainers
+Makefile @maintainers
+
+# Configuration
+pyproject.toml @maintainers
+.pre-commit-config.yaml @maintainers

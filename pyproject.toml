@@ -1,0 +1,126 @@
+[project]
+name = "alumni-connect"
+version = "0.1.0"
+description = "Alumni networking platform for colleges and schools"
+readme = "README.md"
+license = {file = "LICENSE"}
+requires-python = ">=3.13"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Framework :: Django",
+    "Framework :: Django :: 6.0",
+    "Programming Language :: Python :: 3.13",
+    "License :: OSI Approved :: MIT License",
+]
+dependencies = [
+    "django>=6.0.3",
+    "django-filter>=25.2",
+    "djangorestframework>=3.17.1",
+    "gunicorn>=25.3.0",
+    "psycopg[binary]>=3.3.3",
+]
+
+[dependency-groups]
+dev = [
+    "commitizen>=4.13.9",
+    "django-stubs>=6.0.1",
+    "djangorestframework-stubs>=3.16.8",
+    "mypy>=1.19.1",
+    "pip-audit>=2.10.0",
+    "pre-commit>=4.5.1",
+    "pytest>=9.0.2",
+    "pytest-cov>=7.1.0",
+    "pytest-django>=4.12.0",
+    "pytest-xdist>=3.8.0",
+    "ruff>=0.15.8",
+]
+
+# -- Pytest ------------------------------------------------------------------
+[tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "config.settings"
+pythonpath = ["."]
+testpaths = ["tests"]
+addopts = "-v --tb=short --strict-markers -n auto --cov --cov-report=term-missing"
+
+# -- Ruff --------------------------------------------------------------------
+[tool.ruff]
+target-version = "py313"
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+    "E",    # pycodestyle errors
+    "W",    # pycodestyle warnings
+    "F",    # pyflakes
+    "I",    # isort
+    "B",    # flake8-bugbear
+    "UP",   # pyupgrade — enforce modern Python syntax
+    "DJ",   # flake8-django
+    "S",    # flake8-bandit — security checks
+    "SIM",  # flake8-simplify — simplifiable constructs
+    "RET",  # flake8-return — return statement issues
+    "PTH",  # flake8-use-pathlib — prefer pathlib over os.path
+    "PERF", # perflint — performance anti-patterns
+    "FURB", # refurb — modern Python idioms
+    "RUF",  # ruff-specific rules
+    "C4",   # flake8-comprehensions — better comprehensions
+    "PIE",  # flake8-pie — misc lint checks
+    "T20",  # flake8-print — no print() in production code
+    "ERA",  # eradicate — no commented-out code
+    "TC",   # flake8-type-checking — move imports behind TYPE_CHECKING
+    "FA",   # flake8-future-annotations — enforce modern annotations
+    "FLY",  # flynt — prefer f-strings over format/concat
+    "SLOT", # flake8-slots — enforce __slots__ where useful
+    "LOG",  # flake8-logging — correct logging usage
+    "G",    # flake8-logging-format — no %-formatting in logging
+    "PT",   # flake8-pytest-style — consistent pytest patterns
+    "RSE",  # flake8-raise — clean raise statements
+    "ICN",  # flake8-import-conventions — standard import aliases
+]
+ignore = [
+    "E501",   # line length — handled by formatter
+    "S101",   # assert usage — needed in tests
+    "RET504", # unnecessary assignment before return — can aid readability
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["S101", "S105", "S106"]
+"config/settings.py" = ["S105"]
+"conftest.py" = ["S105"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["config"]
+
+# -- Mypy --------------------------------------------------------------------
+[tool.mypy]
+python_version = "3.13"
+plugins = ["mypy_django_plugin.main", "mypy_drf_plugin.main"]
+strict = true
+warn_unreachable = true
+disallow_untyped_defs = true
+ignore_missing_imports = true
+
+[tool.django-stubs]
+django_settings_module = "config.settings"
+
+# -- Commitizen --------------------------------------------------------------
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.1.0"
+tag_format = "v$version"
+version_files = ["pyproject.toml:version"]
+allowed_prefixes = ["Merge", "Revert"]
+
+# -- Coverage ----------------------------------------------------------------
+[tool.coverage.run]
+source = ["."]
+omit = ["tests/*", "manage.py", "config/wsgi.py", "config/asgi.py"]
+
+[tool.coverage.report]
+show_missing = true
+skip_empty = true
+exclude_lines = [
+    "pragma: no cover",
+    "if TYPE_CHECKING:",
+    "if __name__ == .__main__.",
+]

@@ -1,0 +1,19 @@
+# Local development overrides — loaded automatically by docker compose.
+# Do NOT commit environment-specific changes here; this file is checked in
+# as a shared dev baseline. Use .env for credentials.
+
+services:
+  app:
+    build:
+      target: builder
+    command: uv run python manage.py runserver 0.0.0.0:8000
+    user: root
+    volumes:
+      - .:/app
+      - /app/.venv
+    environment:
+      DJANGO_DEBUG: "True"
+    deploy:
+      resources:
+        limits:
+          memory: 1G

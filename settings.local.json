@@ -1,0 +1,61 @@
+{
+  "claude": {
+    "systemPrompt": {
+      "file": ".claude-rules.md",
+      "enforce": true
+    },
+    "permissions": {
+      "fileSystem": {
+        "read": true,
+        "write": true,
+        "delete": true
+      },
+      "shell": {
+        "allowed": true,
+        "blockedCommands": [
+          "git push",
+          "git pull",
+          "git fetch",
+          "git clone",
+          "gh",
+          "scp",
+          "rsync",
+          "ssh",
+          "curl",
+          "wget"
+        ]
+      },
+      "network": {
+        "enabled": false,
+        "allowList": []
+      },
+      "git": {
+        "allowLocal": true,
+        "blockRemote": true,
+        "allowedCommands": [
+          "git status",
+          "git diff",
+          "git add",
+          "git commit"
+        ],
+        "blockedCommands": [
+          "git push",
+          "git pull",
+          "git fetch",
+          "git clone"
+        ]
+      }
+    },
+    "execution": {
+      "mode": "local-only",
+      "requireConfirmationFor": [
+        "delete",
+        "force-overwrite"
+      ]
+    },
+    "safety": {
+      "refuseOnPolicyViolation": true,
+      "logBlockedActions": true
+    }
+  }
+}
